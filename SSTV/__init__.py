@@ -20,7 +20,7 @@ import bitarray, time, urllib, ssl
 
 from wavcompress import compress_bw, decompress_bw, PSNR, max_decomp_level, map2multiple, map2original
 from encode import array2code_blocks, code_blocks2array
-from color import rgb2ycc, ycc2rgb, rgb2gray, join_imgs, split_img, compare_imgs
+from color import rgb2ycc, ycc2rgb, rgb2gray, join_imgs, split_img, compare_imgs, clean8bit
 
 np.random.seed(666)
 print('\nAlex and Diego\'s project code successfully loaded!\n')

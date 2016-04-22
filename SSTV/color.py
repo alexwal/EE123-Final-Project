@@ -22,7 +22,7 @@ def ycc2rgb(img):
           [ 1   ,   +1.772  ,    0      ]])
     ycc[:,:,1] -= 128
     ycc[:,:,2] -= 128
-    return np.uint8(np.array(ycc.reshape(-1,3) * mtx.T).reshape(ycc.shape))
+    return clean8bit(np.array(ycc.reshape(-1,3) * mtx.T).reshape(ycc.shape))
 
 def split_img(img):
     # into 3 separate channels
@@ -45,3 +45,8 @@ def rgb2gray(img):
     # converts RGB img into 1 channel
     # mainly for testing
     return np.dot(img[...,:3], [0.299, 0.587, 0.114])
+
+def clean8bit(img):
+    # convert a float image to unsigned 8 bit image by scaling its values to 0-255 range
+    img -= img.min()
+    return np.uint8(255*img/img.max())

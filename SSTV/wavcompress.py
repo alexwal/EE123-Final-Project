@@ -5,7 +5,7 @@ from wavelet import *
 
 # Compression functions
 
-def compress_bw(im, fraction_coeffs, step_size, wvlt='db4', level=1):
+def compress_bw(im, fraction_coeffs, step_size, wvlt='bior4.4', level=1):
     # step_size: quantization step size
     # DC Level Shift
     # Compute dwt2
@@ -14,11 +14,11 @@ def compress_bw(im, fraction_coeffs, step_size, wvlt='db4', level=1):
     im, bit_depth = subtract_bit_depth(im)
     dwt = dwt2(im, level, wvlt)
     if fraction_coeffs != 1:
-        thresh = thresh_dwt(dwt, f=fraction_coeffs)
-    thresh = scalar_quantizer(thresh, step_size)
-    return np.int8(thresh), bit_depth
+        dwt = thresh_dwt(dwt, f=fraction_coeffs)
+    dwt = scalar_quantizer(dwt, step_size)
+    return np.int8(dwt), bit_depth
     
-def decompress_bw(threshed_dwt, original_shape, original_bit_depth, step_size, delta=0.5, wvlt='db4', level=1):
+def decompress_bw(threshed_dwt, original_shape, original_bit_depth, step_size, delta=0.5, wvlt='bior4.4', level=1):
     # inverse of the above compression function.
     # if original_bit_depth = 8 (ie 0-255 values), then add 2**7 because we sub'd 2**7 before.
     threshed_dwt = scalar_dequantizer(threshed_dwt, step_size=step_size, delta=delta)
@@ -107,5 +107,4 @@ def scalar_dequantizer(coeffs, step_size, delta=0.5):
     return np.sign(coeffs)*(abs(coeffs) + delta)*step_size
 
 def PSNR(im1, im2):
-    # bw imgs
     return 10*np.log10(2**64/(np.sum((im1 - im2)**2)))
