@@ -11,7 +11,6 @@ def rgb2ycc(img):
         [[  0.299  ,   0.587   ,   0.114  ],
          [ -0.169  ,  -0.331   ,   0.499  ],
          [  0.499  ,  -0.418   ,  -0.0813 ]])
-#     return np.uint8(np.array(rgb.reshape(-1,3) * mtx.T + np.array([0, 128, 128])).reshape(rgb.shape))
     return np.array(rgb.reshape(-1,3) * mtx.T + np.array([0, 128, 128])).reshape(rgb.shape)
 
 def ycc2rgb(img):
@@ -41,7 +40,6 @@ def compare_imgs(original, compressed):
     plt.figure()
     plt.title('Comparison: left original, right compressed')
     plt.imshow(np.concatenate((original, compressed), axis=1), cmap = 'gray')
-
 
 def rgb2gray(img):
     # converts RGB img into 1 channel

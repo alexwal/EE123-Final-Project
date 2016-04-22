@@ -1,4 +1,4 @@
-# Alex Walczak, Diego Kiner 2016
+# Alex Walczak, Diego Kiner Spring 2016
 # EE 123 SSTV project
 from __future__ import division
 
@@ -11,11 +11,9 @@ from rtlsdr import RtlSdr
 from scipy import misc
 import cPickle as pickle
 import operator
-
 import bitarray, time, urllib, ssl
 from scipy import signal, integrate
 from fractions import gcd
-
 import pywt
 import bitarray, time, urllib, ssl
 # import ax25

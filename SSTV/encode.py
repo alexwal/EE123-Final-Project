@@ -70,4 +70,3 @@ def num_nonoverlap_blocks(shape, block_size):
     horiz = rows//block_size
     vert = cols//block_size
     return horiz, vert
-

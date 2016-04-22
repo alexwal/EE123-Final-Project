@@ -11,7 +11,6 @@ def compress_bw(im, fraction_coeffs, step_size, wvlt='db4', level=1):
     # Compute dwt2
     # Threshhold wavelet coefficients
     # Quantize coeffs (these can be transmitted to reconsxt image later)
-
     im, bit_depth = subtract_bit_depth(im)
     dwt = dwt2(im, level, wvlt)
     if fraction_coeffs != 1:
@@ -85,7 +84,6 @@ def blocks2image(blocks, blocks_per_row, block_size):
     tiled = []
     for i in range(0,blocks_per_column*blocks_per_row,blocks_per_row):
         tiled.append(np.hstack(blocks[i:i+blocks_per_row,:,:]))
-
     return np.vstack(tiled)
 
 def thresh_dwt(dwt, f):
