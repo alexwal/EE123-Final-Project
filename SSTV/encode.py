@@ -1,6 +1,7 @@
 from __future__ import division
 import numpy as np
 from wavcompress import image2blocks, blocks2image
+import bitarray
 
 # Transmission and encoding code
 
@@ -23,9 +24,9 @@ def int2bitarray(intarray, width=8):
         bits += np.binary_repr(num,width)
     return bitarray.bitarray(bits)
 
-def bits2nparray(bits):
+def bits2nparray(ba):
      # converts {0,1}^n bitarray to np array
-    return (np.fromstring((str(bits)[10:-2]),'u1') - ord('0')).astype(np.float)
+    return (np.fromstring((str(ba)[10:-2]),'u1') - ord('0')).astype(np.float)
 
 def block2bitarray(block):
     return bitarray.bitarray(np.unpackbits(block).tolist())
@@ -33,18 +34,6 @@ def block2bitarray(block):
 def bitarray2block(ba):
     block_size = int(np.sqrt(len(ba)/8))
     return np.packbits(np.uint8(bits2nparray(ba).reshape(-1, 8))).reshape((block_size, block_size))
-
-def block2bitstream(block, width):
-    #todo: actual encoding.
-    array_of_bits = []
-    for row in block:
-        array_of_bits += [int2bitarray(row,width)]
-    return array_of_bits
-
-def bitstream2block(bitstream, width):
-    #todo
-
-    return
 
 def zigzag(n):
     # returns the order of zigzag traversal of a square nxn matrix
