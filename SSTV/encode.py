@@ -8,7 +8,7 @@ def array2code_blocks(array, code_block_size=16):
     # We will do processing on code blocks, and encode code blocks and send them specially (entropy enocding)
     # code_block_size is a power of 2
     # code blocks are sections of the wavelet domain
-    return image2blocks(array, code_block_size)
+    return np.uint8(image2blocks(array, code_block_size))
 
 def code_blocks2array(code_blocks, original_shape, block_size):
     # possible issue: int8 call
@@ -23,15 +23,27 @@ def int2bitarray(intarray, width=8):
         bits += np.binary_repr(num,width)
     return bitarray.bitarray(bits)
 
-def encode_block(block, width):
+def bits2nparray(bits):
+     # converts {0,1}^n bitarray to np array
+    return (np.fromstring((str(bits)[10:-2]),'u1') - ord('0')).astype(np.float)
+
+def block2bitarray(block):
+    return bitarray.bitarray(np.unpackbits(block).tolist())
+
+def bitarray2block(ba):
+    block_size = int(np.sqrt(len(ba)/8))
+    return np.packbits(np.uint8(bits2nparray(ba).reshape(-1, 8))).reshape((block_size, block_size))
+
+def block2bitstream(block, width):
     #todo: actual encoding.
     array_of_bits = []
     for row in block:
         array_of_bits += [int2bitarray(row,width)]
     return array_of_bits
 
-def decode_block(block):
+def bitstream2block(bitstream, width):
     #todo
+
     return
 
 def zigzag(n):
